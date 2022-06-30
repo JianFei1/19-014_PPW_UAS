@@ -1,7 +1,21 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Latent Semantic Analysis (LSA)
+# # PCA dan K-means Clustering
+
+# jika anda menggunakan google colab anda bisa mengetikan syntax dibawah ini untuk melakukan instalasi library yang dibutuhkan.
+# 
+# !pip install nltk <br>
+# !pip install pandas <br>
+# !pip install numpy <br>
+# !pip install scikit-learn <br>
+# !pip install sastrawi <br>
+# 
+# 
+# dan juga pastikan mengetikkan syntax dibawah ini untuk mendownload tambahan library dari nltk
+# 
+# import nltk<br>
+# nltk.download('popular')
 
 # # Crawling Data Pta Trunojoyo
 
@@ -79,28 +93,11 @@ class QuotesSpider(scrapy.Spider):
         }
 
 
-# # Latent Semantic Analysis (LSA)
+# setelah proses crawling selesai, maka kita sudah dapat datanya dalam bentuk file csv. sebelum melakukan proses clustering kita olah dulu datanya. 
 
-# sebelum kita berpindah ke LSA, ada beberapa hal yang perlu dipersiapkan terlebih dahulu.
-# beberapa library yang perlu di siapkan yaitu nltk, pandas, numpy dan scikit-learn.
-# jika anda menggunakan google colab anda bisa mengetikan syntax dibawah ini untuk melakukan instalasi library yang dibutuhkan.
-# 
-# !pip install nltk <br>
-# !pip install pandas <br>
-# !pip install numpy <br>
-# !pip install scikit-learn <br>
-# !pip install sastrawi <br>
-# 
-# dan juga pastikan mengetikkan syntax dibawah ini untuk mendownload tambahan library dari nltk
-# 
-# import nltk<br>
-# nltk.download('popular')
+# ## prepocessing data
 
-# ## preprocessing data
-
-# ### import libray
-# 
-# import library yang dibutuhkan untuk preprocessing data
+# import library yang diperlukan untuk melakukan preprocessing data.
 
 # In[3]:
 
@@ -111,6 +108,7 @@ import nltk
 from nltk.corpus import stopwords
 from nltk import word_tokenize
 import numpy as np
+from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 
 
 # export file "data_pta.csv" dalam bentuk data frame pandas.
@@ -126,7 +124,7 @@ dataCSV.head()
 
 # ## cek missing value
 
-# cek missing value, dengan isna()
+# pandas menyediakan pengecekan missing value yaitu dengan method isna()
 
 # In[5]:
 
@@ -174,8 +172,22 @@ for kata in range(len_df):
     array_stopwords.append(clean_words)
     index_iloc += 1
 
-# membuat kata-kata 1 dokumen di list yang sama
-NewArray_stopwords = []
+
+# diatas ini adalah contoh isi dari salah satu berita yang sudah dilakukan cleansing dan stopword.
+
+# ### Stemming
+
+# stemming ini merupakan proses untuk menghilangkan ibuhan pada tiap kata, sehingga tiap katanya merupakan kata dasar.
+# contohnya semisal kita mempunyai kata "memakan", maka setelah di stemming akan menjadi kata "makan"
+
+# In[9]:
+
+
+# mendefinisikan function stemming
+factory = StemmerFactory()
+stemmer = factory.create_stemmer()
+
+array_stemming = [] 
 for j in array_stopwords:
     # proses stem per kalimat
     temp = ""
@@ -183,28 +195,28 @@ for j in array_stopwords:
         # print(i)
         temp = temp +" "+ i
 
-    NewArray_stopwords.append(temp)
-print(NewArray_stopwords[0])
+    hasil = stemmer.stem(temp)
+    array_stemming.append(hasil)
+# print('array ', array_stemming)
 
-
-# diatas ini adalah contoh isi dari salah satu berita yang sudah dilakukan cleansing dan stopword.
 
 # dibawah ini adalah proses memasukkan data yang sudah dilakukan preprocessing ke dalam data frame yang mempunyai nama "dataSCV"
 
-# In[9]:
+# In[11]:
 
 
-dataCSV.head()
-
-
-# In[10]:
-
-
-dataCSV = dataCSV.drop('judul', axis=1)
 dataCSV = dataCSV.drop('abstrak_ID', axis=1)
-dataCSV['isi'] = np.array(NewArray_stopwords)
 dataCSV.head()
 
+
+# In[12]:
+
+
+dataCSV['abstrak'] = np.array(array_stemming)
+dataCSV.head()
+
+
+# setelah dilakukan preprocessing data, kita lanjutkan untuk proses pembobotan dengan TF-IDF
 
 # ## Term Frequency - Inverse Document Frequency (TF-IDF)
 
@@ -234,7 +246,7 @@ dataCSV.head()
 
 # import library yang dibutuhkan dalam melakukan pemrosesan TF-IDF dan juga ambil data dari data hasil preprocessing yang sudah dilakukan diatas.
 
-# In[11]:
+# In[13]:
 
 
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
@@ -245,7 +257,7 @@ df = dataCSV
 
 # ubah data menjadi bentuk list, lalu lakukan proses tf dengan cara memanggil library CountVectorizer dari scikit-learn.
 
-# In[12]:
+# In[14]:
 
 
 #mengubah fitur dalam bentuk list
@@ -272,7 +284,7 @@ df_tf.head(8)
 
 # setelah melakukan proses TF, lakukan proses TF-IDF dan kemudian simpan hasilnya dalam bentuk data frame.
 
-# In[13]:
+# In[15]:
 
 
 #tfidf dengan tfidf transformer
@@ -282,101 +294,169 @@ df_tfidf =pd.DataFrame(data=tfidf,index=list(range(1, len(tfidf[:,1])+1, )),colu
 df_tfidf.head(8)
 
 
-# ## Latent Simantic Analysis (LSA)
+# ## K-means Clustering
 
-# Algoritma LSA (Latent Semantic Analysis) adalah salah satu algoritma yang dapat digunakan untuk menganalisa hubungan antara sebuah frase/kalimat dengan sekumpulan dokumen.
-# Dalam pemrosesan LSA ada tahap yang dinamakan Singular Value Decomposition (SVD), SVD adalah salah satu teknik reduksi dimensi yang bermanfaat untuk memperkecil nilai kompleksitas dalam pemrosesan term-document matrix. berikut adalah rumus SVD:
-# 
-# $$
-# A_{m n}=U_{m m} x S_{m n} x V_{n n}^{T}
-# $$
-# 
-# Dengan:
-# 
-# $
-# {A_{m n}}: \text { Matrix Awal } \\
-# {U_{m m}}: \text { Matrix ortogonal U }\\
-# {S_{m n}}\>: \text { Matrix diagonal S }\\
-# {V_{n n}^{T}}\>\>: \text { Transpose matrix ortogonal V }\\
-# $
-
-# In[14]:
-
-
-from sklearn.decomposition import TruncatedSVD
-
-
-# ### proses LSA dengan library TruncatedSVD dari scikit
-
-# In[15]:
-
-
-lsa = TruncatedSVD(n_components=8, random_state=36)
-lsa_matrix = lsa.fit_transform(tfidf)
-
-
-# ## proporsi topik pada tiap dokumen
+# import library yang diperlukan
 
 # In[16]:
 
 
-# menampilkan proporsi tiap topic pada masing-masing dokumen
-df_topicDocument =pd.DataFrame(data=lsa_matrix,index=list(range(1, len(lsa_matrix[:,1])+1)))
-df_topicDocument.head(6)
+import pandas as pd
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
 
 
-# ## proporsi term terhadap topik
+# ## import Data
+
+# import data yang akan digunakan dalam proses clustering
 
 # In[17]:
 
 
-# menampilkan proporsi tiap topic pada masing-masing dokumen
-df_termTopic =pd.DataFrame(data=lsa.components_,index=list(range(1, len(lsa.components_[:,1])+1)), columns=[fitur])
-df_termTopic.head(100)
+#import data frame
+df = pd.read_csv("tf-idf.csv")
+df = df.drop("Unnamed: 0", axis=1)
+df.head(5)
 
 
-# dibawah ini adalah untuk menampilkan kata-kata yang paling penting pada tiap topiknya
+# ## Dimentional reduction PCA
+
+# PCA adalah sebuah metode bagaimana mereduksi dimensi. dimana reduksi dimensi sendiri adalah pengurangan dimensi suatu dataset dengan pertimbangan bahwa informasi-informasi penting tetap dipertahankan. 
+# 
+# tahapan PCA yaitu:
+# 1. mencari nilai rata-rata
+# 2. mencari nilai zero mean
+# 3. mencari nilai covarian matrix
+# 4. mencari eigen value dan eigen vector
+# 
+# Nilai Means per dokumen
+# 
+# $$
+# \bar{x}=n\left(\sum_{i=1}^{n} \frac{1}{x_{i}}\right)^{-1}
+# $$
+# 
+# Nilai Varian dan Covarian
+# 
+# $$
+# \operatorname{var}(X)=\frac{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)\left(X_{i}-\bar{X}\right)}{n-1}
+# $$
+# 
+# Keterangan:
+# 
+# $
+# X_{i} : \text {Populasi X ke i} \\
+# $
+# 
+# $
+# \bar{X} : \text {Mean dari populasi X}\\
+# $
+# 
+# $
+# n : \text {Jumlah populasi}\\
+# $
+# 
+# $$
+# \operatorname{cov}(X, Y)=\frac{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)\left(Y_{i}-\bar{Y}\right)}{n-1}
+# $$
+# 
+# Keterangan:
+# 
+# $
+# X_{i} : \text {Populasi X ke i} \\
+# $
+# 
+# $
+# \bar{X} : \text {Mean dari populasi X}\\
+# $
+# 
+# $
+# Y_{i} : \text {Populasi X ke i} \\
+# $
+# 
+# $
+# \bar{Y} : \text {Mean dari populasi X}\\
+# $
+# 
+# $
+# n : \text {Jumlah populasi}\\
+# $
+# 
+# Nilai eigen value dan eigen vactor
+# 
+# $$
+# (\lambda I-A) \mathbf{v}=\mathbf{0}
+# $$
+# 
+# Keterangan:
+# 
+# $
+# \lambda : \text {eigen velue}\\
+# $
+# 
+# $
+# v : \text {eigen vactor}\\
+# $
 
 # In[18]:
 
 
-# most important words for each topic
-vocab = count_vectorizer.get_feature_names()
-
-for i, comp in enumerate(lsa.components_):
-    vocab_comp = zip(vocab, comp)
-    sorted_words = sorted(vocab_comp, key= lambda x:x[1], reverse=True)[:30]
-    print("Topic "+str(i)+": ")
-    for t in sorted_words:
-        print(t[0],end=" ")
-    print("\n")
+# melihat n_component terbaik
+# dengan cumulative explained variance
+pca = PCA().fit(df)
+cmv = pca.explained_variance_ratio_.cumsum()
+print(cmv)
+print(cmv.shape)
 
 
-# ### Word cloud
+# code diatas untuk menunjukkan banyak componen terbaik yang dapat diambil. semakin mendekati nol maka data semakin kehilangan informasinya, dan jika semakin mendekati angka 1, informasi pada data tersebut akan semakin utuh.
+
+# setelah menentukan jumlah komponen terbaik yang dapat diambil, maka dilanjutkan dengan proses reduksi dimensinya. disini saya menggunakan n component sebanyak 50
 
 # In[19]:
 
 
-def draw_word_cloud(index):
-    from wordcloud import WordCloud
-    import matplotlib.pyplot as plt
-    imp_words_topic=""
-    comp=lsa.components_[index]
-    vocab_comp = zip(vocab, comp)
-    sorted_words = sorted(vocab_comp, key= lambda x:x[1], reverse=True)[:30]
-    for word in sorted_words:
-        imp_words_topic=imp_words_topic+" "+word[0]
+# proses reduksi dimensi
+pca = PCA(n_components=50)
+X_df = pca.fit_transform(df)
 
-    wordcloud = WordCloud(width=600, height=400).generate(imp_words_topic)
-    plt.figure(figsize=(5,5))
-    plt.imshow(wordcloud)
-    plt.axis("off")
-    plt.tight_layout()
-    plt.show()
 
+# ## K-Means - Clustering
+
+# kali ini saya menggunakan metode elbow untuk menentukan jumlah cluster terbaik yang dapat diperoleh dari data pta trunojoyo.
 
 # In[20]:
 
 
-draw_word_cloud(0)
+elbow = []
+for i in range(1, 11):
+    kmeans = KMeans(n_clusters=i, random_state=5)
+    kmeans.fit(X_df)
+    elbow.append(kmeans.inertia_)
+plt.plot(range(1, 11), elbow, 'bx-')
+plt.title('Metode Elbow')
+plt.xlabel('Jumlah clusters')
+plt.ylabel('elbow')
+plt.show()
+
+
+# didapatkan cluster sama dengan 2, lanjut dengan proses training dengan metode k-means clustering
+
+# In[21]:
+
+
+# kmeans clustering
+kmeans = KMeans(n_clusters=2, random_state=5) # 2 clusters
+kmeans.fit(X_df)
+y_kmeans = kmeans.predict(X_df)
+y_kmeans
+
+
+# berikut ini merupakan persebaran data dari pta trunojoyo, dengan dua klaster
+
+# In[22]:
+
+
+# ploting
+plt.scatter(X_df[:, 0], X_df[:, 1], c=y_kmeans);
 

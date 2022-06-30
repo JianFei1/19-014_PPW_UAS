@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Latent Semantic Analysis (LSA) &#8212; UAS PPW</title>
+    <title>PCA dan K-means Clustering &#8212; UAS PPW</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -54,8 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="PCA dan K-means Clustering" href="PCA_Kmeans.html" />
-    <link rel="prev" title="ini merupakan UAS PPW" href="intro.html" />
+    <link rel="prev" title="Latent Semantic Analysis (LSA)" href="LSA.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -116,13 +115,13 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="LSA.html">
    Latent Semantic Analysis (LSA)
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="PCA_Kmeans.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    PCA dan K-means Clustering
   </a>
  </li>
@@ -185,7 +184,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/JianFei1/19-014_PPW_UAS/main?urlpath=tree/LSA.ipynb"
+        <a href="https://mybinder.org/v2/gh/JianFei1/19-014_PPW_UAS/main?urlpath=tree/PCA_Kmeans.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -245,7 +244,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/JianFei1/19-014_PPW_UAS/issues/new?title=Issue%20on%20page%20%2FLSA.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/JianFei1/19-014_PPW_UAS/issues/new?title=Issue%20on%20page%20%2FPCA_Kmeans.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -273,7 +272,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="_sources/LSA.ipynb"
+        <a href="_sources/PCA_Kmeans.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -334,7 +333,7 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   Latent Semantic Analysis (LSA)
+   PCA dan K-means Clustering
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -352,24 +351,10 @@ title="Print to PDF"
      Crawling kedua
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   Latent Semantic Analysis (LSA)
-  </a>
-  <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#preprocessing-data">
-     preprocessing data
+    <a class="reference internal nav-link" href="#prepocessing-data">
+     prepocessing data
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#import-libray">
-       import libray
-      </a>
-     </li>
-    </ul>
    </li>
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#cek-missing-value">
@@ -379,6 +364,11 @@ title="Print to PDF"
      <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#cleansing-dan-stopword">
        Cleansing dan Stopword
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#stemming">
+       Stemming
       </a>
      </li>
     </ul>
@@ -406,33 +396,24 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#latent-simantic-analysis-lsa">
-     Latent Simantic Analysis (LSA)
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#proses-lsa-dengan-library-truncatedsvd-dari-scikit">
-       proses LSA dengan library TruncatedSVD dari scikit
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#proporsi-topik-pada-tiap-dokumen">
-     proporsi topik pada tiap dokumen
+    <a class="reference internal nav-link" href="#k-means-clustering">
+     K-means Clustering
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#proporsi-term-terhadap-topik">
-     proporsi term terhadap topik
+    <a class="reference internal nav-link" href="#import-data">
+     import Data
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#word-cloud">
-       Word cloud
-      </a>
-     </li>
-    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dimentional-reduction-pca">
+     Dimentional reduction PCA
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     K-Means - Clustering
+    </a>
    </li>
   </ul>
  </li>
@@ -445,7 +426,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Latent Semantic Analysis (LSA)</h1>
+                <h1>PCA dan K-means Clustering</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -457,7 +438,7 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   Latent Semantic Analysis (LSA)
+   PCA dan K-means Clustering
   </a>
  </li>
  <li class="toc-h1 nav-item toc-entry">
@@ -475,24 +456,10 @@ title="Print to PDF"
      Crawling kedua
     </a>
    </li>
-  </ul>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   Latent Semantic Analysis (LSA)
-  </a>
-  <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#preprocessing-data">
-     preprocessing data
+    <a class="reference internal nav-link" href="#prepocessing-data">
+     prepocessing data
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#import-libray">
-       import libray
-      </a>
-     </li>
-    </ul>
    </li>
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#cek-missing-value">
@@ -502,6 +469,11 @@ title="Print to PDF"
      <li class="toc-h3 nav-item toc-entry">
       <a class="reference internal nav-link" href="#cleansing-dan-stopword">
        Cleansing dan Stopword
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#stemming">
+       Stemming
       </a>
      </li>
     </ul>
@@ -529,33 +501,24 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#latent-simantic-analysis-lsa">
-     Latent Simantic Analysis (LSA)
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#proses-lsa-dengan-library-truncatedsvd-dari-scikit">
-       proses LSA dengan library TruncatedSVD dari scikit
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#proporsi-topik-pada-tiap-dokumen">
-     proporsi topik pada tiap dokumen
+    <a class="reference internal nav-link" href="#k-means-clustering">
+     K-means Clustering
     </a>
    </li>
    <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#proporsi-term-terhadap-topik">
-     proporsi term terhadap topik
+    <a class="reference internal nav-link" href="#import-data">
+     import Data
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#word-cloud">
-       Word cloud
-      </a>
-     </li>
-    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#dimentional-reduction-pca">
+     Dimentional reduction PCA
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     K-Means - Clustering
+    </a>
    </li>
   </ul>
  </li>
@@ -569,8 +532,17 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="latent-semantic-analysis-lsa">
-<h1>Latent Semantic Analysis (LSA)<a class="headerlink" href="#latent-semantic-analysis-lsa" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="pca-dan-k-means-clustering">
+<h1>PCA dan K-means Clustering<a class="headerlink" href="#pca-dan-k-means-clustering" title="Permalink to this headline">#</a></h1>
+<p>jika anda menggunakan google colab anda bisa mengetikan syntax dibawah ini untuk melakukan instalasi library yang dibutuhkan.</p>
+<p>!pip install nltk <br>
+!pip install pandas <br>
+!pip install numpy <br>
+!pip install scikit-learn <br>
+!pip install sastrawi <br></p>
+<p>dan juga pastikan mengetikkan syntax dibawah ini untuk mendownload tambahan library dari nltk</p>
+<p>import nltk<br>
+nltk.download(‘popular’)</p>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="crawling-data-pta-trunojoyo">
 <h1>Crawling Data Pta Trunojoyo<a class="headerlink" href="#crawling-data-pta-trunojoyo" title="Permalink to this headline">#</a></h1>
@@ -650,26 +622,11 @@ jalankan file ini dengan cara yang sama seperti yang pertama, akan tetapi sesuai
 </div>
 </div>
 </div>
+<p>setelah proses crawling selesai, maka kita sudah dapat datanya dalam bentuk file csv. sebelum melakukan proses clustering kita olah dulu datanya.</p>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1>Latent Semantic Analysis (LSA)<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
-<p>sebelum kita berpindah ke LSA, ada beberapa hal yang perlu dipersiapkan terlebih dahulu.
-beberapa library yang perlu di siapkan yaitu nltk, pandas, numpy dan scikit-learn.
-jika anda menggunakan google colab anda bisa mengetikan syntax dibawah ini untuk melakukan instalasi library yang dibutuhkan.</p>
-<p>!pip install nltk <br>
-!pip install pandas <br>
-!pip install numpy <br>
-!pip install scikit-learn <br>
-!pip install sastrawi <br></p>
-<p>dan juga pastikan mengetikkan syntax dibawah ini untuk mendownload tambahan library dari nltk</p>
-<p>import nltk<br>
-nltk.download(‘popular’)</p>
-<section id="preprocessing-data">
-<h2>preprocessing data<a class="headerlink" href="#preprocessing-data" title="Permalink to this headline">#</a></h2>
-<section id="import-libray">
-<h3>import libray<a class="headerlink" href="#import-libray" title="Permalink to this headline">#</a></h3>
-<p>import library yang dibutuhkan untuk preprocessing data</p>
+<section id="prepocessing-data">
+<h2>prepocessing data<a class="headerlink" href="#prepocessing-data" title="Permalink to this headline">#</a></h2>
+<p>import library yang diperlukan untuk melakukan preprocessing data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import library</span>
@@ -678,6 +635,7 @@ nltk.download(‘popular’)</p>
 <span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
 <span class="kn">from</span> <span class="nn">nltk</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">Sastrawi.Stemmer.StemmerFactory</span> <span class="kn">import</span> <span class="n">StemmerFactory</span>
 </pre></div>
 </div>
 </div>
@@ -746,10 +704,9 @@ nltk.download(‘popular’)</p>
 </div></div></div>
 </div>
 </section>
-</section>
 <section id="cek-missing-value">
 <h2>cek missing value<a class="headerlink" href="#cek-missing-value" title="Permalink to this headline">#</a></h2>
-<p>cek missing value, dengan isna()</p>
+<p>pandas menyediakan pengecekan missing value yaitu dengan method isna()</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataCSV</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -811,9 +768,23 @@ lalu untuk stopword ini untuk membuang kata yang tidak mempunyai makna seperti:<
     
     <span class="n">array_stopwords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">clean_words</span><span class="p">)</span>
     <span class="n">index_iloc</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>diatas ini adalah contoh isi dari salah satu berita yang sudah dilakukan cleansing dan stopword.</p>
+</section>
+<section id="stemming">
+<h3>Stemming<a class="headerlink" href="#stemming" title="Permalink to this headline">#</a></h3>
+<p>stemming ini merupakan proses untuk menghilangkan ibuhan pada tiap kata, sehingga tiap katanya merupakan kata dasar.
+contohnya semisal kita mempunyai kata “memakan”, maka setelah di stemming akan menjadi kata “makan”</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># mendefinisikan function stemming</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
+<span class="n">stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
 
-<span class="c1"># membuat kata-kata 1 dokumen di list yang sama</span>
-<span class="n">NewArray_stopwords</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">array_stemming</span> <span class="o">=</span> <span class="p">[]</span> 
 <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">array_stopwords</span><span class="p">:</span>
     <span class="c1"># proses stem per kalimat</span>
     <span class="n">temp</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -821,83 +792,94 @@ lalu untuk stopword ini untuk membuang kata yang tidak mempunyai makna seperti:<
         <span class="c1"># print(i)</span>
         <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">+</span><span class="s2">&quot; &quot;</span><span class="o">+</span> <span class="n">i</span>
 
-    <span class="n">NewArray_stopwords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">NewArray_stopwords</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">hasil</span> <span class="o">=</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="n">array_stemming</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hasil</span><span class="p">)</span>
+<span class="c1"># print(&#39;array &#39;, array_stemming)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> tujuan penelitian pengaruh variabel relationship marketing keuntungan komitmen komunikasi kebenaran loyalitas nasabah adira finance variabel relationship marketing berpengaruh loyalitas nasabah adira finance wilayah surabaya barat berdasarkan uji f variabel relationship marketing keuntungan komitmen komunikasi kebenaran simultan berpengaruh signifikan loyalitas nasabah adira finance wilayah surabaya barat berdasarkan uji t parsial variabel keuntungan komitmen kebenaran berpengaruh signifikan variabel terikat variabel komunikasi berpengaruh negatif variabel terikat variabel berpengaruh variabel komitmen kunci relationship marketing keuntungan komitmen komunikasi kebenaran loyalitas
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span><span class="o">/</span><span class="n">ipykernel_12564</span><span class="o">/</span><span class="mf">1212900176.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span>         <span class="n">temp</span> <span class="o">=</span> <span class="n">temp</span> <span class="o">+</span><span class="s2">&quot; &quot;</span><span class="o">+</span> <span class="n">i</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> 
+<span class="ne">---&gt; </span><span class="mi">13</span>     <span class="n">hasil</span> <span class="o">=</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">array_stemming</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hasil</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="c1"># print(&#39;array &#39;, array_stemming)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python39\lib\site-packages\Sastrawi\Stemmer\CachedStemmer.py</span> in <span class="ni">stem</span><span class="nt">(self, text)</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>                 <span class="n">stems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>             <span class="k">else</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">20</span>                 <span class="n">stem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delegatedStemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>                 <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">stem</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span>                 <span class="n">stems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stem</span><span class="p">)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python39\lib\site-packages\Sastrawi\Stemmer\Stemmer.py</span> in <span class="ni">stem</span><span class="nt">(self, text)</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> 
+<span class="g g-Whitespace">     </span><span class="mi">26</span>         <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">27</span>             <span class="n">stems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stem_word</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span> 
+<span class="g g-Whitespace">     </span><span class="mi">29</span>         <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stems</span><span class="p">)</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python39\lib\site-packages\Sastrawi\Stemmer\Stemmer.py</span> in <span class="ni">stem_word</span><span class="nt">(self, word)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stem_plural_word</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span>         <span class="k">else</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">36</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stem_singular_word</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">37</span> 
+<span class="g g-Whitespace">     </span><span class="mi">38</span>     <span class="k">def</span> <span class="nf">is_plural</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python39\lib\site-packages\Sastrawi\Stemmer\Stemmer.py</span> in <span class="ni">stem_singular_word</span><span class="nt">(self, word)</span>
+<span class="g g-Whitespace">     </span><span class="mi">82</span>         <span class="sd">&quot;&quot;&quot;Stem a singular word to its common stem form.&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">83</span>         <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">visitor_provider</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">84</span>         <span class="n">context</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">85</span> 
+<span class="g g-Whitespace">     </span><span class="mi">86</span>         <span class="k">return</span> <span class="n">context</span><span class="o">.</span><span class="n">result</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python39\lib\site-packages\Sastrawi\Stemmer\Context\Context.py</span> in <span class="ni">execute</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span> 
+<span class="g g-Whitespace">     </span><span class="mi">36</span>         <span class="c1">#step 1 - 5</span>
+<span class="ne">---&gt; </span><span class="mi">37</span>         <span class="bp">self</span><span class="o">.</span><span class="n">start_stemming_process</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">38</span> 
+<span class="g g-Whitespace">     </span><span class="mi">39</span>         <span class="c1">#step 6</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python39\lib\site-packages\Sastrawi\Stemmer\Context\Context.py</span> in <span class="ni">start_stemming_process</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">     </span><span class="mi">83</span> 
+<span class="g g-Whitespace">     </span><span class="mi">84</span>         <span class="c1">#ECS loop pengembalian akhiran</span>
+<span class="ne">---&gt; </span><span class="mi">85</span>         <span class="bp">self</span><span class="o">.</span><span class="n">loop_pengembalian_akhiran</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">86</span> 
+<span class="g g-Whitespace">     </span><span class="mi">87</span>     <span class="k">def</span> <span class="nf">remove_prefixes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python39\lib\site-packages\Sastrawi\Stemmer\Context\Context.py</span> in <span class="ni">loop_pengembalian_akhiran</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">139</span> 
+<span class="g g-Whitespace">    </span><span class="mi">140</span>             <span class="c1">#step 4,5</span>
+<span class="ne">--&gt; </span><span class="mi">141</span>             <span class="bp">self</span><span class="o">.</span><span class="n">remove_prefixes</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">142</span>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">143</span>                 <span class="k">return</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python39\lib\site-packages\Sastrawi\Stemmer\Context\Context.py</span> in <span class="ni">remove_prefixes</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">     </span><span class="mi">87</span>     <span class="k">def</span> <span class="nf">remove_prefixes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">88</span>         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">89</span>             <span class="bp">self</span><span class="o">.</span><span class="n">accept_prefix_visitors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix_pisitors</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">90</span>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">91</span>                 <span class="k">return</span>
+
+<span class="nn">~\AppData\Local\Programs\Python\Python39\lib\site-packages\Sastrawi\Stemmer\Context\Context.py</span> in <span class="ni">accept_prefix_visitors</span><span class="nt">(self, visitors)</span>
+<span class="g g-Whitespace">    </span><span class="mi">111</span>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">112</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span>
+<span class="ne">--&gt; </span><span class="mi">113</span>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_is_stopped</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">114</span>                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span>
+<span class="g g-Whitespace">    </span><span class="mi">115</span>             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">removals</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">removalCount</span><span class="p">:</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
 </div>
-<p>diatas ini adalah contoh isi dari salah satu berita yang sudah dilakukan cleansing dan stopword.</p>
 <p>dibawah ini adalah proses memasukkan data yang sudah dilakukan preprocessing ke dalam data frame yang mempunyai nama “dataSCV”</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataCSV</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>judul</th>
-      <th>abstrak_ID</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>PENGARUH RELATIONSHIP MARKETING TERHADAP LOYAL...</td>
-      <td>Tujuan penelitian ini adalah untuk mengetahui ...</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>PENGARUH SELF EFFICACY TERHADAP PRESTASI AKADE...</td>
-      <td>Tujuan dari penelitian ini adalah untuk menget...</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>ANALISIS PERSEPSI BRAND ASSOCIATION MENURUT PE...</td>
-      <td>Tujuan penelitian ini adalah untuk mengetahui ...</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Pengukuran Website Quality Pada Situs Sistem A...</td>
-      <td>Aplikasi nyata pemanfaatan teknologi informasi...</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>PENGARUH STRUKTUR MODAL DAN LIKUIDITAS TERHADA...</td>
-      <td>Pendekatan penelitian yang digunakan dalam pen...</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataCSV</span> <span class="o">=</span> <span class="n">dataCSV</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;judul&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">dataCSV</span> <span class="o">=</span> <span class="n">dataCSV</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;abstrak_ID&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">dataCSV</span><span class="p">[</span><span class="s1">&#39;isi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">NewArray_stopwords</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataCSV</span> <span class="o">=</span> <span class="n">dataCSV</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;abstrak_ID&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">dataCSV</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -921,34 +903,95 @@ lalu untuk stopword ini untuk membuang kata yang tidak mempunyai makna seperti:<
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>isi</th>
+      <th>judul</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>tujuan penelitian pengaruh variabel relations...</td>
+      <td>PENGARUH RELATIONSHIP MARKETING TERHADAP LOYAL...</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>tujuan penelitian pengaruh variabel self effi...</td>
+      <td>PENGARUH SELF EFFICACY TERHADAP PRESTASI AKADE...</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>tujuan penelitian persepsi brand association ...</td>
+      <td>ANALISIS PERSEPSI BRAND ASSOCIATION MENURUT PE...</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>aplikasi nyata pemanfaatan teknologi informas...</td>
+      <td>Pengukuran Website Quality Pada Situs Sistem A...</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>pendekatan penelitian penelitian pendekatan k...</td>
+      <td>PENGARUH STRUKTUR MODAL DAN LIKUIDITAS TERHADA...</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataCSV</span><span class="p">[</span><span class="s1">&#39;abstrak&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">array_stemming</span><span class="p">)</span>
+<span class="n">dataCSV</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>judul</th>
+      <th>abstrak</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>PENGARUH RELATIONSHIP MARKETING TERHADAP LOYAL...</td>
+      <td>tuju teliti pengaruh variabel relationship mar...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PENGARUH SELF EFFICACY TERHADAP PRESTASI AKADE...</td>
+      <td>tuju teliti pengaruh variabel self efficacy ma...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>ANALISIS PERSEPSI BRAND ASSOCIATION MENURUT PE...</td>
+      <td>tuju teliti persepsi brand association langgan...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Pengukuran Website Quality Pada Situs Sistem A...</td>
+      <td>aplikasi nyata manfaat teknologi informasi kom...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PENGARUH STRUKTUR MODAL DAN LIKUIDITAS TERHADA...</td>
+      <td>dekat teliti teliti dekat kuantitatif populasi...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>setelah dilakukan preprocessing data, kita lanjutkan untuk proses pembobotan dengan TF-IDF</p>
 </section>
 </section>
 <section id="term-frequency-inverse-document-frequency-tf-idf">
@@ -1293,7 +1336,6 @@ W_{i, j}=\frac{n_{i, j}}{\sum_{j=1}^{p} n_{j, i}} \log _{2} \frac{D}{d_{j}}
       <th>adjusted</th>
       <th>administrasi</th>
       <th>...</th>
-      <th>which</th>
       <th>while</th>
       <th>wilayah</th>
       <th>wildan</th>
@@ -1301,6 +1343,7 @@ W_{i, j}=\frac{n_{i, j}}{\sum_{j=1}^{p} n_{j, i}} \log _{2} \frac{D}{d_{j}}
       <th>wispandono</th>
       <th>with</th>
       <th>xl</th>
+      <th>yakin</th>
       <th>yamaha</th>
       <th>yustina</th>
     </tr>
@@ -1315,13 +1358,13 @@ W_{i, j}=\frac{n_{i, j}}{\sum_{j=1}^{p} n_{j, i}} \log _{2} \frac{D}{d_{j}}
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.23887</td>
+      <td>0.241135</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>...</td>
       <td>0.0</td>
+      <td>0.160756</td>
       <td>0.0</td>
-      <td>0.159247</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1339,13 +1382,13 @@ W_{i, j}=\frac{n_{i, j}}{\sum_{j=1}^{p} n_{j, i}} \log _{2} \frac{D}{d_{j}}
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.00000</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>...</td>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1363,13 +1406,13 @@ W_{i, j}=\frac{n_{i, j}}{\sum_{j=1}^{p} n_{j, i}} \log _{2} \frac{D}{d_{j}}
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.00000</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>...</td>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1387,13 +1430,13 @@ W_{i, j}=\frac{n_{i, j}}{\sum_{j=1}^{p} n_{j, i}} \log _{2} \frac{D}{d_{j}}
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.00000</td>
+      <td>0.000000</td>
       <td>0.0</td>
-      <td>0.187768</td>
+      <td>0.186016</td>
       <td>...</td>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1411,13 +1454,13 @@ W_{i, j}=\frac{n_{i, j}}{\sum_{j=1}^{p} n_{j, i}} \log _{2} \frac{D}{d_{j}}
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.00000</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>...</td>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1429,19 +1472,19 @@ W_{i, j}=\frac{n_{i, j}}{\sum_{j=1}^{p} n_{j, i}} \log _{2} \frac{D}{d_{j}}
     <tr>
       <th>6</th>
       <td>0.0</td>
-      <td>0.020463</td>
+      <td>0.021070</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.00000</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>...</td>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1459,13 +1502,13 @@ W_{i, j}=\frac{n_{i, j}}{\sum_{j=1}^{p} n_{j, i}} \log _{2} \frac{D}{d_{j}}
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.00000</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>...</td>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1477,19 +1520,19 @@ W_{i, j}=\frac{n_{i, j}}{\sum_{j=1}^{p} n_{j, i}} \log _{2} \frac{D}{d_{j}}
     <tr>
       <th>8</th>
       <td>0.0</td>
-      <td>0.045052</td>
+      <td>0.046185</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.00000</td>
+      <td>0.000000</td>
       <td>0.0</td>
       <td>0.000000</td>
       <td>...</td>
       <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1500,51 +1543,33 @@ W_{i, j}=\frac{n_{i, j}}{\sum_{j=1}^{p} n_{j, i}} \log _{2} \frac{D}{d_{j}}
     </tr>
   </tbody>
 </table>
-<p>8 rows × 1118 columns</p>
+<p>8 rows × 985 columns</p>
 </div></div></div>
 </div>
 </section>
-<section id="latent-simantic-analysis-lsa">
-<h2>Latent Simantic Analysis (LSA)<a class="headerlink" href="#latent-simantic-analysis-lsa" title="Permalink to this headline">#</a></h2>
-<p>Algoritma LSA (Latent Semantic Analysis) adalah salah satu algoritma yang dapat digunakan untuk menganalisa hubungan antara sebuah frase/kalimat dengan sekumpulan dokumen.
-Dalam pemrosesan LSA ada tahap yang dinamakan Singular Value Decomposition (SVD), SVD adalah salah satu teknik reduksi dimensi yang bermanfaat untuk memperkecil nilai kompleksitas dalam pemrosesan term-document matrix. berikut adalah rumus SVD:</p>
-<div class="math notranslate nohighlight">
-\[
-A_{m n}=U_{m m} x S_{m n} x V_{n n}^{T}
-\]</div>
-<p>Dengan:</p>
-<p><span class="math notranslate nohighlight">\(
-{A_{m n}}: \text { Matrix Awal } \\
-{U_{m m}}: \text { Matrix ortogonal U }\\
-{S_{m n}}\&gt;: \text { Matrix diagonal S }\\
-{V_{n n}^{T}}\&gt;\&gt;: \text { Transpose matrix ortogonal V }\\
-\)</span></p>
+<section id="k-means-clustering">
+<h2>K-means Clustering<a class="headerlink" href="#k-means-clustering" title="Permalink to this headline">#</a></h2>
+<p>import library yang diperlukan</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">TruncatedSVD</span>
-</pre></div>
-</div>
-</div>
-</div>
-<section id="proses-lsa-dengan-library-truncatedsvd-dari-scikit">
-<h3>proses LSA dengan library TruncatedSVD dari scikit<a class="headerlink" href="#proses-lsa-dengan-library-truncatedsvd-dari-scikit" title="Permalink to this headline">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lsa</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">36</span><span class="p">)</span>
-<span class="n">lsa_matrix</span> <span class="o">=</span> <span class="n">lsa</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">tfidf</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-</section>
-<section id="proporsi-topik-pada-tiap-dokumen">
-<h2>proporsi topik pada tiap dokumen<a class="headerlink" href="#proporsi-topik-pada-tiap-dokumen" title="Permalink to this headline">#</a></h2>
+<section id="import-data">
+<h2>import Data<a class="headerlink" href="#import-data" title="Permalink to this headline">#</a></h2>
+<p>import data yang akan digunakan dalam proses clustering</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># menampilkan proporsi tiap topic pada masing-masing dokumen</span>
-<span class="n">df_topicDocument</span> <span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">lsa_matrix</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lsa_matrix</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
-<span class="n">df_topicDocument</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#import data frame</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;tf-idf.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;Unnamed: 0&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1567,117 +1592,6 @@ A_{m n}=U_{m m} x S_{m n} x V_{n n}^{T}
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>0.179557</td>
-      <td>0.069865</td>
-      <td>-0.028269</td>
-      <td>-0.005366</td>
-      <td>0.057699</td>
-      <td>0.000681</td>
-      <td>0.067705</td>
-      <td>-0.114351</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.184918</td>
-      <td>0.150043</td>
-      <td>-0.021681</td>
-      <td>-0.168534</td>
-      <td>0.155076</td>
-      <td>0.080410</td>
-      <td>0.058544</td>
-      <td>0.346538</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.144088</td>
-      <td>-0.005509</td>
-      <td>0.022803</td>
-      <td>-0.067654</td>
-      <td>0.148947</td>
-      <td>0.044224</td>
-      <td>-0.061020</td>
-      <td>0.120949</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.140322</td>
-      <td>0.047013</td>
-      <td>0.044171</td>
-      <td>-0.325475</td>
-      <td>0.289692</td>
-      <td>0.198014</td>
-      <td>-0.089082</td>
-      <td>0.206151</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>0.199595</td>
-      <td>0.152330</td>
-      <td>0.306399</td>
-      <td>-0.001797</td>
-      <td>0.174781</td>
-      <td>-0.458723</td>
-      <td>-0.152835</td>
-      <td>-0.196862</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>0.200854</td>
-      <td>0.454029</td>
-      <td>-0.120863</td>
-      <td>-0.024133</td>
-      <td>-0.170526</td>
-      <td>0.076215</td>
-      <td>-0.102087</td>
-      <td>-0.039706</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-</section>
-<section id="proporsi-term-terhadap-topik">
-<h2>proporsi term terhadap topik<a class="headerlink" href="#proporsi-term-terhadap-topik" title="Permalink to this headline">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># menampilkan proporsi tiap topic pada masing-masing dokumen</span>
-<span class="n">df_termTopic</span> <span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">lsa</span><span class="o">.</span><span class="n">components_</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">lsa</span><span class="o">.</span><span class="n">components_</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="mi">1</span><span class="p">)),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">fitur</span><span class="p">])</span>
-<span class="n">df_termTopic</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead tr th {
-        text-align: left;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr>
-      <th></th>
       <th>abidin</th>
       <th>abstrak</th>
       <th>abtrak</th>
@@ -1689,7 +1603,6 @@ A_{m n}=U_{m m} x S_{m n} x V_{n n}^{T}
       <th>adjusted</th>
       <th>administrasi</th>
       <th>...</th>
-      <th>which</th>
       <th>while</th>
       <th>wilayah</th>
       <th>wildan</th>
@@ -1697,291 +1610,291 @@ A_{m n}=U_{m m} x S_{m n} x V_{n n}^{T}
       <th>wispandono</th>
       <th>with</th>
       <th>xl</th>
+      <th>yakin</th>
       <th>yamaha</th>
       <th>yustina</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>1</th>
-      <td>0.002274</td>
-      <td>0.045600</td>
-      <td>0.002073</td>
-      <td>0.017305</td>
-      <td>0.014707</td>
-      <td>0.014883</td>
-      <td>0.000640</td>
-      <td>0.008588</td>
-      <td>0.017580</td>
-      <td>0.005275</td>
+      <th>0</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.241135</td>
+      <td>0.0</td>
+      <td>0.000000</td>
       <td>...</td>
-      <td>0.000119</td>
-      <td>0.000119</td>
-      <td>0.005725</td>
-      <td>0.001831</td>
-      <td>0.010831</td>
-      <td>0.001831</td>
-      <td>0.000119</td>
-      <td>0.063627</td>
-      <td>0.022495</td>
-      <td>0.003893</td>
+      <td>0.0</td>
+      <td>0.160756</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>...</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.007629</td>
-      <td>0.025784</td>
-      <td>0.010445</td>
-      <td>-0.006878</td>
-      <td>-0.005942</td>
-      <td>-0.009069</td>
-      <td>0.001954</td>
-      <td>0.007741</td>
-      <td>-0.010104</td>
-      <td>0.003685</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
       <td>...</td>
-      <td>0.000163</td>
-      <td>0.000163</td>
-      <td>0.005161</td>
-      <td>0.003301</td>
-      <td>-0.002851</td>
-      <td>0.003301</td>
-      <td>0.000163</td>
-      <td>-0.026577</td>
-      <td>-0.012393</td>
-      <td>-0.001325</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>-0.003414</td>
-      <td>-0.007159</td>
-      <td>-0.003812</td>
-      <td>-0.002431</td>
-      <td>-0.001636</td>
-      <td>-0.005388</td>
-      <td>0.006402</td>
-      <td>-0.002906</td>
-      <td>0.000723</td>
-      <td>0.004058</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.186016</td>
       <td>...</td>
-      <td>0.000029</td>
-      <td>0.000029</td>
-      <td>-0.001938</td>
-      <td>0.000067</td>
-      <td>0.000224</td>
-      <td>0.000067</td>
-      <td>0.000029</td>
-      <td>-0.026673</td>
-      <td>0.005690</td>
-      <td>0.000403</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>-0.000633</td>
-      <td>-0.011872</td>
-      <td>-0.000113</td>
-      <td>-0.011490</td>
-      <td>-0.014156</td>
-      <td>0.019589</td>
-      <td>0.000751</td>
-      <td>0.001634</td>
-      <td>-0.008424</td>
-      <td>-0.035100</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
       <td>...</td>
-      <td>-0.000773</td>
-      <td>-0.000773</td>
-      <td>0.001089</td>
-      <td>-0.002833</td>
-      <td>-0.010284</td>
-      <td>-0.002833</td>
-      <td>-0.000773</td>
-      <td>0.147247</td>
-      <td>-0.067406</td>
-      <td>-0.001962</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>-0.004804</td>
-      <td>0.018869</td>
-      <td>-0.009307</td>
-      <td>0.013894</td>
-      <td>0.013782</td>
-      <td>0.005414</td>
-      <td>-0.003619</td>
-      <td>0.007555</td>
-      <td>-0.003770</td>
-      <td>0.032339</td>
-      <td>...</td>
-      <td>0.001065</td>
-      <td>0.001065</td>
-      <td>0.005037</td>
-      <td>0.003557</td>
-      <td>0.005149</td>
-      <td>0.003557</td>
-      <td>0.001065</td>
-      <td>0.007440</td>
-      <td>0.026622</td>
-      <td>0.002841</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>-0.000115</td>
-      <td>-0.008823</td>
-      <td>0.002681</td>
-      <td>0.002726</td>
-      <td>-0.003040</td>
-      <td>-0.000698</td>
-      <td>0.005440</td>
-      <td>0.002011</td>
-      <td>0.000607</td>
-      <td>0.024346</td>
-      <td>...</td>
-      <td>-0.000742</td>
-      <td>-0.000742</td>
-      <td>0.001340</td>
-      <td>-0.000077</td>
-      <td>0.002121</td>
-      <td>-0.000077</td>
-      <td>-0.000742</td>
-      <td>0.011950</td>
-      <td>0.030554</td>
-      <td>-0.001908</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>-0.001840</td>
-      <td>0.027148</td>
-      <td>-0.012887</td>
-      <td>0.002702</td>
-      <td>0.014251</td>
-      <td>0.002101</td>
-      <td>0.004137</td>
-      <td>0.007713</td>
-      <td>0.012628</td>
-      <td>-0.013148</td>
-      <td>...</td>
-      <td>-0.000152</td>
-      <td>-0.000152</td>
-      <td>0.005142</td>
-      <td>0.003184</td>
-      <td>-0.010139</td>
-      <td>0.003184</td>
-      <td>-0.000152</td>
-      <td>-0.039961</td>
-      <td>-0.027469</td>
-      <td>0.000682</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>0.000807</td>
-      <td>-0.012864</td>
-      <td>0.004187</td>
-      <td>0.015565</td>
-      <td>0.010059</td>
-      <td>0.004517</td>
-      <td>-0.000739</td>
-      <td>-0.016184</td>
-      <td>-0.007438</td>
-      <td>0.027315</td>
-      <td>...</td>
-      <td>0.003730</td>
-      <td>0.003730</td>
-      <td>-0.010789</td>
-      <td>0.006759</td>
-      <td>-0.003005</td>
-      <td>0.006759</td>
-      <td>0.003730</td>
-      <td>-0.024443</td>
-      <td>-0.018057</td>
-      <td>0.016396</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
     </tr>
   </tbody>
 </table>
-<p>8 rows × 1118 columns</p>
+<p>5 rows × 985 columns</p>
 </div></div></div>
 </div>
-<p>dibawah ini adalah untuk menampilkan kata-kata yang paling penting pada tiap topiknya</p>
+</section>
+<section id="dimentional-reduction-pca">
+<h2>Dimentional reduction PCA<a class="headerlink" href="#dimentional-reduction-pca" title="Permalink to this headline">#</a></h2>
+<p>PCA adalah sebuah metode bagaimana mereduksi dimensi. dimana reduksi dimensi sendiri adalah pengurangan dimensi suatu dataset dengan pertimbangan bahwa informasi-informasi penting tetap dipertahankan.</p>
+<p>tahapan PCA yaitu:</p>
+<ol class="simple">
+<li><p>mencari nilai rata-rata</p></li>
+<li><p>mencari nilai zero mean</p></li>
+<li><p>mencari nilai covarian matrix</p></li>
+<li><p>mencari eigen value dan eigen vector</p></li>
+</ol>
+<p>Nilai Means per dokumen</p>
+<div class="math notranslate nohighlight">
+\[
+\bar{x}=n\left(\sum_{i=1}^{n} \frac{1}{x_{i}}\right)^{-1}
+\]</div>
+<p>Nilai Varian dan Covarian</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{var}(X)=\frac{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)\left(X_{i}-\bar{X}\right)}{n-1}
+\]</div>
+<p>Keterangan:</p>
+<p><span class="math notranslate nohighlight">\(
+X_{i} : \text {Populasi X ke i} \\
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(
+\bar{X} : \text {Mean dari populasi X}\\
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(
+n : \text {Jumlah populasi}\\
+\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{cov}(X, Y)=\frac{\sum_{i=1}^{n}\left(X_{i}-\bar{X}\right)\left(Y_{i}-\bar{Y}\right)}{n-1}
+\]</div>
+<p>Keterangan:</p>
+<p><span class="math notranslate nohighlight">\(
+X_{i} : \text {Populasi X ke i} \\
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(
+\bar{X} : \text {Mean dari populasi X}\\
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(
+Y_{i} : \text {Populasi X ke i} \\
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(
+\bar{Y} : \text {Mean dari populasi X}\\
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(
+n : \text {Jumlah populasi}\\
+\)</span></p>
+<p>Nilai eigen value dan eigen vactor</p>
+<div class="math notranslate nohighlight">
+\[
+(\lambda I-A) \mathbf{v}=\mathbf{0}
+\]</div>
+<p>Keterangan:</p>
+<p><span class="math notranslate nohighlight">\(
+\lambda : \text {eigen velue}\\
+\)</span></p>
+<p><span class="math notranslate nohighlight">\(
+v : \text {eigen vactor}\\
+\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># most important words for each topic</span>
-<span class="n">vocab</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">get_feature_names</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">comp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lsa</span><span class="o">.</span><span class="n">components_</span><span class="p">):</span>
-    <span class="n">vocab_comp</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="n">comp</span><span class="p">)</span>
-    <span class="n">sorted_words</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">vocab_comp</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">30</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Topic &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;: &quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">sorted_words</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># melihat n_component terbaik</span>
+<span class="c1"># dengan cumulative explained variance</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">cmv</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cmv</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cmv</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Topic 0: 
-variabel keputusan pembelian produk penelitian uji berpengaruh konsumen harga merek signifikan pengaruh bangkalan promosi kualitas kerja simultan parsial pesan analisis iklan kecamatan kepuasan pelayanan hipotesis hasil data motor nilai distribusi 
-
-Topic 1: 
-kerja karyawan kompensasi pegawai pengembangan prestasi produktivitas kinerja pln pesan pelatihan pendidikan kepemimpinan karir variabel perusahaan dinas pt nilai langsung stressor pengaruh semangat persero kabupaten tipe fhitung finansial pengujian signifikan 
-
-Topic 2: 
-saham perusahaan split stock ratio return akuisisi perbedaan terdaftar harga perdagangan volume penelitian bursa efek indonesia pemecahan manufaktur current tbk equity profitabilitas menyebabkan sampel bangkrut kritis sehat portofolio keuangan debt 
-
-Topic 3: 
-pesan iklan xl keputusan isi saham kecamatan kartu seluler pembelian televisi format beli geger struktur promosi sumber uji angin jamu manyar muncul sido tolak split stock distribusi minat konsumen pasar 
-
-Topic 4: 
-pesan iklan kepuasan langsung konsumen akademik online mahasiswa ratio isi persepsi madura universitas pelanggan trunojoyo kualitas beli minat struktur kartu seluler pengaruh pelayanan televisi perusahaan surabaya format pakaian pasar jaminan 
-
-Topic 5: 
-saham split stock pesan kepuasan harga kerja pelayanan perdagangan pemecahan akademik swalayan volume konsumen perbedaan kualitas berbelanja jerry tom pelanggan tbk bukti jaminan fisik portofolio menyebabkan sepeda empati tanggap motor 
-
-Topic 6: 
-kompensasi langsung finansial saham kinerja variabel pendidikan nilai hipotesis pengujian kepemimpinan nonfinansial signifikan fhitung bebas terikat split stock kantor terbukti sampang pt tbk pos mahasiswa iklan membuktikan online kompetensi pembelian 
-
-Topic 7: 
-online trunojoyo madura universitas mahasiswa akademik iklan fakultas pakaian ekonomi fashion produk prestasi kerja pembelian faktor stressor belanja preferensi perusahaan kompetensi of dosen efficacy generality magnitude self strength merek klik 
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ASUS\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function get_feature_names is deprecated; get_feature_names is deprecated in 1.0 and will be removed in 1.2. Please use get_feature_names_out instead.
-  warnings.warn(msg, category=FutureWarning)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.05644606 0.10084699 0.13725456 0.17219095 0.20355431 0.23300805
+ 0.2617234  0.28948833 0.31549056 0.34024816 0.36442515 0.38818923
+ 0.41105617 0.43325542 0.45500296 0.47656163 0.49740548 0.51781542
+ 0.53783232 0.55774882 0.57735124 0.59605765 0.61465148 0.63288338
+ 0.65090543 0.66849227 0.6860094  0.70298021 0.71976072 0.73574046
+ 0.75161789 0.76678335 0.78166744 0.79636705 0.81094924 0.82521475
+ 0.83915799 0.85279328 0.86572152 0.87834031 0.89068576 0.90264755
+ 0.91439741 0.92582519 0.93630648 0.94643267 0.9564459  0.9659739
+ 0.97532565 0.9824733  0.9894325  0.99617039 1.         1.        ]
+(54,)
 </pre></div>
 </div>
 </div>
 </div>
-<section id="word-cloud">
-<h3>Word cloud<a class="headerlink" href="#word-cloud" title="Permalink to this headline">#</a></h3>
+<p>code diatas untuk menunjukkan banyak componen terbaik yang dapat diambil. semakin mendekati nol maka data semakin kehilangan informasinya, dan jika semakin mendekati angka 1, informasi pada data tersebut akan semakin utuh.</p>
+<p>setelah menentukan jumlah komponen terbaik yang dapat diambil, maka dilanjutkan dengan proses reduksi dimensinya. disini saya menggunakan n component sebanyak 50</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">draw_word_cloud</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
-    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-    <span class="n">imp_words_topic</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
-    <span class="n">comp</span><span class="o">=</span><span class="n">lsa</span><span class="o">.</span><span class="n">components_</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-    <span class="n">vocab_comp</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="n">comp</span><span class="p">)</span>
-    <span class="n">sorted_words</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">vocab_comp</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)[:</span><span class="mi">30</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sorted_words</span><span class="p">:</span>
-        <span class="n">imp_words_topic</span><span class="o">=</span><span class="n">imp_words_topic</span><span class="o">+</span><span class="s2">&quot; &quot;</span><span class="o">+</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-    <span class="n">wordcloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">imp_words_topic</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">wordcloud</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># proses reduksi dimensi</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">X_df</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">draw_word_cloud</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/LSA_53_0.png" src="_images/LSA_53_0.png" />
 </div>
 </div>
 </section>
+<section id="id1">
+<h2>K-Means - Clustering<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<p>kali ini saya menggunakan metode elbow untuk menentukan jumlah cluster terbaik yang dapat diperoleh dari data pta trunojoyo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elbow</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">):</span>
+    <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">i</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_df</span><span class="p">)</span>
+    <span class="n">elbow</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">elbow</span><span class="p">,</span> <span class="s1">&#39;bx-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Metode Elbow&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Jumlah clusters&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;elbow&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/PCA_Kmeans_58_0.png" src="_images/PCA_Kmeans_58_0.png" />
+</div>
+</div>
+<p>didapatkan cluster sama dengan 2, lanjut dengan proses training dengan metode k-means clustering</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># kmeans clustering</span>
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># 2 clusters</span>
+<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_df</span><span class="p">)</span>
+<span class="n">y_kmeans</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_df</span><span class="p">)</span>
+<span class="n">y_kmeans</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1,
+       0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0,
+       0, 0, 0, 0, 0, 0, 0, 1, 1, 0])
+</pre></div>
+</div>
+</div>
+</div>
+<p>berikut ini merupakan persebaran data dari pta trunojoyo, dengan dua klaster</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ploting</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_df</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_df</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_kmeans</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/PCA_Kmeans_62_0.png" src="_images/PCA_Kmeans_62_0.png" />
+</div>
+</div>
 </section>
 </section>
 
@@ -2012,19 +1925,12 @@ online trunojoyo madura universitas mahasiswa akademik iklan fakultas pakaian ek
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="LSA.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">ini merupakan UAS PPW</p>
+            <p class="prev-next-title">Latent Semantic Analysis (LSA)</p>
         </div>
-    </a>
-    <a class='right-next' id="next-link" href="PCA_Kmeans.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">PCA dan K-means Clustering</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
